@@ -28,7 +28,7 @@ sdate = '20220101'
 edate = '20221231'
 
 # Creating a def to handle missing values if the data doesn't exist. 
-def missing_var(var_name, time):
+def missing_var(time):
     """
     This function creates an array of 1's that is the same length as the 
     TIMESTAMP_END variable, which in this current case is 48, then multiplies 
@@ -37,7 +37,7 @@ def missing_var(var_name, time):
     renamed to match the variable name given by Ameriflux. 
     """
     var_array = np.ones((time.shape))*-9999
-    return var_name
+    return var_array
 
 
 # Set dates, first one is to use for downloading data, second is ARM format
@@ -91,9 +91,6 @@ soil_mapping = {
     'vwc': {'name': 'SWC', 'units': '%'},
     'soil_temp': {'name': 'TS', 'units': 'deg C'},
     'temp': {'name': 'TS', 'units': 'deg C'},
-    #'soil_temperature_west': {'name': 'TS', 'units': 'deg C'},
-    #'soil_temperature_east': {'name': 'TS', 'units': 'deg C'},
-    #'soil_temperature_south': {'name': 'TS', 'units': 'deg C'},
 }
 c1 = [var_mapping[v]['name'] for v in var_mapping]
 columns = time_vars + c1
@@ -133,7 +130,7 @@ for s in site:
                 if v in ds_merge:
                     data[var_mapping[v]['name']] = ds_merge[v].values
                 else:
-                    data[var_mapping[v]['name']] = missing_var(var_mapping[v]['name'], ds_merge['time'].values)
+                    data[var_mapping[v]['name']] = missing_var(ds_merge['time'].values)
 
             prev_var = ''
             for var in soil_mapping:
