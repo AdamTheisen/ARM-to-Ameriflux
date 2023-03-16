@@ -108,7 +108,7 @@ for s in site:
             ds = act.io.armfiles.read_netcdf(files, parallel=True)
 
             # Add DQR information to object to remove later
-            #ds = act.qc.arm.add_dqr_to_qc(ds)
+            ds = act.qc.arm.add_dqr_to_qc(ds)
 
             # Filter all the failing QC out
             # IMPORTANT!!!!!  While not implemented here yet, the flag_[variable_name] variables will
